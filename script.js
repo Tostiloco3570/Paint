@@ -246,9 +246,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --------------------------------------------------------------------------
+    // 6.1 GESTIÓN DE COLORES PERSONALIZADOS GUARDADOS (ESTILO MS PAINT)
+    // --------------------------------------------------------------------------
+    const ranurasCustom = document.getElementById('ranurasCustom');
+    let ranuraObjetivo = null; // Ranura específica seleccionada por el usuario
+
+    function guardarEnRanuraPersonalizada(colorHex, ranuraEspecifica = null) {
+        if (!ranurasCustom) return;
+        const slots = ranurasCustom.querySelectorAll('.custom-slot');
+        let destino = ranuraEspecifica;
+        if (!destino) {
+            // Busca la primera ranura vacía o sobrescribe la primera
+            destino = Array.from(slots).find(s => s.classList.contains('empty')) || slots[0];
+        }
+
+        destino.classList.remove('empty');
+        destino.style.backgroundColor = colorHex;
+        destino.dataset.color = colorHex;
+        destino.title = 'Color guardado: ' + colorHex;
+
+        // Marcar la ranura como activa
+        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+        destino.classList.add('active');
+    }
+
+    // Mientras el usuario arrastra en el selector nativo superior derecho
     inputColorPersonalizado.addEventListener('input', (evento) => {
         cambiarColor(evento.target.value);
     });
+
+    // Cuando el usuario confirma el color en el selector nativo
+    inputColorPersonalizado.addEventListener('change', (evento) => {
+        const colorElegido = evento.target.value;
+        cambiarColor(colorElegido);
+        guardarEnRanuraPersonalizada(colorElegido, ranuraObjetivo);
+        ranuraObjetivo = null; // Reiniciar ranura temporal
+    });
+
+    // Interacción con la fila de ranuras personalizadas
+    if (ranurasCustom) {
+        ranurasCustom.addEventListener('click', (evento) => {
+            const slot = evento.target.closest('.custom-slot');
+            if (!slot) return;
+
+            if (slot.classList.contains('empty')) {
+                // Si la ranura está vacía, abre el selector nativo para llenarla
+                ranuraObjetivo = slot;
+                inputColorPersonalizado.click();
+            } else {
+                // Si ya contiene un color guardado, lo activa como color de trazo
+                cambiarColor(slot.dataset.color);
+            }
+        });
+    }
 
     inputGrosor.addEventListener('input', (evento) => {
         grosor = parseInt(evento.target.value, 10);
@@ -260,80 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 6.1 ESTILO APARTADO: GENERADOR DE COLOR PERSONALIZADO (RGB)
-    // --------------------------------------------------------------------------
-    const canalR = document.getElementById('canalR');
-    const canalG = document.getElementById('canalG');
-    const canalB = document.getElementById('canalB');
-    const numR = document.getElementById('numR');
-    const numG = document.getElementById('numG');
-    const numB = document.getElementById('numB');
-    const previewColorGenerado = document.getElementById('previewColorGenerado');
-    const codigoHexGenerado = document.getElementById('codigoHexGenerado');
-    const btnGuardarColor = document.getElementById('btnGuardarColor');
-    const ranurasCustom = document.getElementById('ranurasCustom');
-
-    function rgbAHex(r, g, b) {
-        return "#" + [r, g, b].map(x => {
-            const hex = parseInt(x, 10).toString(16);
-            return hex.length === 1 ? "0" + hex : hex;
-        }).join("");
-    }
-
-    function actualizarColorGenerado() {
-        let r = canalR.value;
-        let g = canalG.value;
-        let b = canalB.value;
-
-        numR.innerHTML = r;
-        numG.innerHTML = g;
-        numB.innerHTML = b;
-
-        let hex = rgbAHex(r, g, b);
-        previewColorGenerado.style.backgroundColor = hex;
-        codigoHexGenerado.innerHTML = hex.toUpperCase();
-
-        // Se asigna como color activo de trazo sin modificar los 20 colores fijos
-        cambiarColor(hex);
-    }
-
-    if (canalR && canalG && canalB) {
-        canalR.addEventListener('input', actualizarColorGenerado);
-        canalG.addEventListener('input', actualizarColorGenerado);
-        canalB.addEventListener('input', actualizarColorGenerado);
-    }
-
-    if (btnGuardarColor && ranurasCustom) {
-        btnGuardarColor.addEventListener('click', () => {
-            let hex = codigoHexGenerado.innerHTML;
-            let ranuras = ranurasCustom.querySelectorAll('.slot-swatch');
-            
-            // Buscar la primera ranura vacía o sobreescribir la primera
-            let ranuraDestino = Array.from(ranuras).find(r => r.classList.contains('empty')) || ranuras[0];
-            
-            ranuraDestino.classList.remove('empty');
-            ranuraDestino.style.backgroundColor = hex;
-            ranuraDestino.dataset.color = hex;
-            ranuraDestino.title = 'Color personal: ' + hex;
-
-            // Marcar activa la ranura guardada
-            ranuras.forEach(r => r.classList.remove('active'));
-            ranuraDestino.classList.add('active');
-        });
-
-        // Seleccionar color desde una ranura guardada por el usuario
-        ranurasCustom.addEventListener('click', (evento) => {
-            let slot = evento.target.closest('.slot-swatch');
-            if (slot && !slot.classList.contains('empty') && slot.dataset.color) {
-                ranurasCustom.querySelectorAll('.slot-swatch').forEach(r => r.classList.remove('active'));
-                slot.classList.add('active');
-                cambiarColor(slot.dataset.color);
-            }
-        });
-    }
-
-    // --------------------------------------------------------------------------
-    // 6.2 ALTERNAR MODO OSCURO / MODO CLARO
+    // 6.1 ALTERNAR MODO OSCURO / MODO CLARO
     // --------------------------------------------------------------------------
     const btnModoOscuro = document.getElementById('btnModoOscuro');
     const iconoModoOscuro = document.getElementById('iconoModoOscuro');

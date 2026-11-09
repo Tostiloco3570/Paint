@@ -3,11 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Paint Web | Graficación TESCI</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Iconos SVG limpios -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="app-container">
+
+        <!-- BARRA SUPERIOR (HEADER / MENÚ ARCHIVO) -->
+        <header class="app-header">
+            <div class="brand">
+                <i class="fa-solid fa-palette brand-icon"></i>
+                <div class="brand-text">
+                    <h1>Paint Web</h1>
+                    <span>Graficación • TESCI</span>
+                </div>
+            </div>
+
+            <nav class="file-menu">
+                <button id="btnNuevo" class="menu-btn" title="Crear un nuevo lienzo">
+                    <i class="fa-regular fa-file"></i> Nuevo
+                </button>
+                <button id="btnAbrir" class="menu-btn" title="Cargar imagen existente">
+                    <i class="fa-regular fa-folder-open"></i> Abrir
+                </button>
+                <input type="file" id="inputArchivo" accept="image/png, image/jpeg, image/webp" style="display: none;">
+                
+                <button id="btnGuardarModal" class="menu-btn primary-btn" title="Guardar imagen en 3 formatos">
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar como...
+                </button>
+                <div class="history-actions">
+                    <button id="btnDeshacer" class="menu-btn icon-only" title="Deshacer (Ctrl+Z)" disabled>
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                    <button id="btnRehacer" class="menu-btn icon-only" title="Rehacer (Ctrl+Y)" disabled>
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                    <button id="btnLimpiar" class="menu-btn icon-only danger-hover" title="Limpiar todo el lienzo">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- BARRA DE HERRAMIENTAS Y ESPACIO DE TRABAJO -->
+        <div class="main-workspace">
+
+            <!-- BARRA DE HERRAMIENTAS SUPERIOR/LATERAL (PALETA CLARA) -->
+            <aside class="toolbar-panel">
+
+                <!-- GRUPO 1: HERRAMIENTAS BÁSICAS -->
+                <div class="tool-section">
+                    <span class="section-title">Herramientas</span>
+                    <div class="tool-grid">
+                        <button class="tool-btn active" data-tool="lapiz" title="Lápiz / Pincel libre">
+                            <i class="fa-solid fa-pencil"></i>
+                            <span>Lápiz</span>
+                        </button>
+                        <button class="tool-btn" data-tool="goma" title="Goma de borrar" disabled>
+                            <i class="fa-solid fa-eraser"></i>
+                            <span>Goma</span>
+                        </button>
+                        <button class="tool-btn" data-tool="rellenar" title="Rellenar con color (Bote de pintura)" disabled>
+                            <i class="fa-solid fa-fill-drip"></i>
+                            <span>Rellenar</span>
+                        </button>
+                        <button class="tool-btn" data-tool="texto" title="Insertar texto en el lienzo" disabled>
+                            <i class="fa-solid fa-font"></i>
+                            <span>Texto</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GRUPO 2: LÍNEAS Y FIGURAS -->
+                <div class="tool-section">
+                    <span class="section-title">Líneas y Formas</span>
+                    <div class="tool-grid">
+                        <button class="tool-btn" data-tool="linea" title="Línea recta (Práctica 3 y 4)">
+                            <i class="fa-solid fa-slash"></i>
+                            <span>Línea</span>
+                        </button>
+                        <button class="tool-btn" data-tool="curva" title="Línea curva cuadrática (Práctica 5, 6 y 11)">
+                            <i class="fa-solid fa-bezier-curve"></i>
+                            <span>Curva</span>
+                        </button>
+                        <button class="tool-btn" data-tool="cuadrado" title="Cuadrado / Rectángulo (Práctica 7)">
+                            <i class="fa-regular fa-square"></i>
+                            <span>Cuadrado</span>
+                        </button>
+                        <button class="tool-btn" data-tool="circulo" title="Círculo / Óvalo (Práctica 7)">
+                            <i class="fa-regular fa-circle"></i>
+                            <span>Círculo</span>
+                        </button>
+                        <button class="tool-btn" data-tool="triangulo" title="Triángulo (Práctica 7 y 8)">
+                            <i class="fa-solid fa-play fa-rotate-270"></i>
+                            <span>Triángulo</span>
+                        </button>
+                        <button class="tool-btn" data-tool="estrella" title="Estrella" disabled>
+                            <i class="fa-regular fa-star"></i>
+                            <span>Estrella</span>
+                        </button>
+                    </div>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="checkRellenoFigura">
+                        <span>Rellenar figuras</span>
+                    </label>
+                </div>
+
+                <!-- GRUPO 3: SELECCIÓN Y TRANSFORMACIONES -->
+                <div class="tool-section">
+                    <span class="section-title">Selección y Edición</span>
+                    <div class="tool-grid">
+                        <button class="tool-btn" data-tool="seleccionar" id="btnSeleccionar" title="Seleccionar área rectangular" disabled>
+                            <i class="fa-regular fa-object-ungroup"></i>
+                            <span>Seleccionar</span>
+                        </button>
+                        <button class="tool-btn" id="btnCopiar" title="Copiar selección" disabled>
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                        <button class="tool-btn" id="btnPegar" title="Pegar contenido copiado" disabled>
+                            <i class="fa-regular fa-paste"></i>
+                            <span>Pegar</span>
+                        </button>
+                        <button class="tool-btn" id="btnRecortar" title="Recortar lienzo a la selección" disabled>
+                            <i class="fa-solid fa-crop-simple"></i>
+                            <span>Recortar</span>
+                        </button>
+                        <button class="tool-btn" id="btnRotarModal" title="Rotar en círculos / grados" disabled>
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            <span>Rotar</span>
+                        </button>
+                        <button class="tool-btn" id="btnGirarModal" title="Girar y Redimensionar (más ancho, más alto o ambos)" disabled>
+                            <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                            <span>Girar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GRUPO 4: MÓDULO ESPECIAL DE GRAFICACIÓN -->
+                <div class="tool-section">
+                    <span class="section-title">Graficación de Datos</span>
+                    <button id="btnGraficarModal" class="action-card-btn" title="Crear gráfica de pastel o barras con 5 datos" disabled>
+                        <i class="fa-solid fa-chart-column"></i>
+                        <div>
+                            <strong>Graficar (5 datos)</strong>
+                            <small>Barras o Pastel</small>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- GRUPO 5: GROSOR DE TRAZO -->
+                <div class="tool-section">
+                    <div class="slider-header">
+                        <span class="section-title">Grosor de trazo</span>
+                        <span id="grosorValor" class="badge">3 px</span>
+                    </div>
+                    <div class="range-container">
+                        <input type="range" id="inputGrosor" min="1" max="50" value="3">
+                        <div class="brush-preview" id="brushPreview"></div>
+                    </div>
+                </div>
+
+                <!-- GRUPO 6: PALETA DE COLORES (20 COLORES FIJOS) -->
+                <div class="tool-section palette-section">
+                    <div class="colors-header">
+                        <span class="section-title">Colores</span>
+                        <div class="active-colors-preview">
+                            <div class="color-badge-container" title="Color actual de trazo">
+                                <span class="badge-label">Color</span>
+                                <div class="color-indicator" id="colorActualIndicador" style="background-color: #000000;"></div>
+                            </div>
+                            <input type="color" id="inputColorPersonalizado" value="#000000" title="Selector de color personalizado">
+                        </div>
+                    </div>
+
+                    <!-- Cuadrícula con 20 colores preestablecidos fijos -->
+                    <div class="color-palette" id="paletaColores">
+                        <!-- Generados estáticamente para carga instantánea -->
+                        <button class="color-swatch active" style="background-color: #000000;" data-color="#000000" title="Negro"></button>
+                        <button class="color-swatch" style="background-color: #7f7f7f;" data-color="#7f7f7f" title="Gris oscuro"></button>
+                        <button class="color-swatch" style="background-color: #880015;" data-color="#880015" title="Marrón rojizo"></button>
+                        <button class="color-swatch" style="background-color: #ed1c24;" data-color="#ed1c24" title="Rojo"></button>
+                        <button class="color-swatch" style="background-color: #ff7f27;" data-color="#ff7f27" title="Naranja"></button>
+                        <button class="color-swatch" style="background-color: #fff200;" data-color="#fff200" title="Amarillo"></button>
+                        <button class="color-swatch" style="background-color: #22b14c;" data-color="#22b14c" title="Verde"></button>
+                        <button class="color-swatch" style="background-color: #00a2e8;" data-color="#00a2e8" title="Azul turquesa"></button>
+                        <button class="color-swatch" style="background-color: #3f48cc;" data-color="#3f48cc" title="Azul índigo"></button>
+                        <button class="color-swatch" style="background-color: #a349a4;" data-color="#a349a4" title="Púrpura"></button>
+                        
+                        <button class="color-swatch" style="background-color: #ffffff; border-color: #cbd5e1;" data-color="#ffffff" title="Blanco"></button>
+                        <button class="color-swatch" style="background-color: #c3c3c3;" data-color="#c3c3c3" title="Gris claro"></button>
+                        <button class="color-swatch" style="background-color: #b97a57;" data-color="#b97a57" title="Café"></button>
+                        <button class="color-swatch" style="background-color: #ffaec9;" data-color="#ffaec9" title="Rosa"></button>
+                        <button class="color-swatch" style="background-color: #ffc90e;" data-color="#ffc90e" title="Dorado / Ámbar"></button>
+                        <button class="color-swatch" style="background-color: #efe4b0;" data-color="#efe4b0" title="Beige"></button>
+                        <button class="color-swatch" style="background-color: #b5e61d;" data-color="#b5e61d" title="Verde lima"></button>
+                        <button class="color-swatch" style="background-color: #99d9ea;" data-color="#99d9ea" title="Celeste"></button>
+                        <button class="color-swatch" style="background-color: #7092be;" data-color="#7092be" title="Azul grisáceo"></button>
+                        <button class="color-swatch" style="background-color: #c8bfe7;" data-color="#c8bfe7" title="Lavanda"></button>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- ÁREA DE DIBUJO CON SCROLL Y ZOOM -->
+            <main class="canvas-viewport" id="canvasViewport">
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <!-- Canvas principal sobre el que se guarda el dibujo final -->
+                    <canvas id="lienzoPrincipal" width="800" height="500"></canvas>
+                    <!-- Canvas transparente superpuesto para vistas previas de líneas, figuras y selección -->
+                    <canvas id="lienzoPreview" width="800" height="500"></canvas>
+                    <!-- Marco visual de selección activa (Marquee) -->
+                    <div id="selectionMarquee" class="selection-marquee" style="display: none;">
+                        <div class="marquee-tag">Selección</div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+
+        <!-- BARRA DE ESTADO INFERIOR (ESTILO PRÁCTICAS 10 Y 11) -->
+        <footer class="app-statusbar">
+            <div class="status-item">
+                <i class="fa-solid fa-crosshairs"></i>
+                <span id="coordenadas">x : 0 | y : 0</span>
+            </div>
+            <div class="status-item">
+                <i class="fa-regular fa-image"></i>
+                <span id="dimensionesLienzo">800 × 500 px</span>
+            </div>
+            <div class="status-item">
+                <i class="fa-solid fa-wrench"></i>
+                <span id="infoHerramienta">Herramienta: Lápiz</span>
+            </div>
+            <div class="status-item status-right">
+                <span class="badge-tag">TESCI Graficación</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODALES / VENTANAS EMERGENTES                            -->
+    <!-- ======================================================== -->
+
+    <!-- 1. MODAL NUEVO LIENZO -->
+    <div class="modal-overlay" id="modalNuevo">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-regular fa-file"></i> Nuevo Lienzo</h3>
+                <button class="close-modal-btn" data-close="modalNuevo">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtitle">Configura las dimensiones y el color base de tu área de dibujo:</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nuevoAncho">Ancho (px):</label>
+                        <input type="number" id="nuevoAncho" value="900" min="100" max="3000" step="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="nuevoAlto">Alto (px):</label>
+                        <input type="number" id="nuevoAlto" value="600" min="100" max="3000" step="50">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tamaños rápidos recomendados:</label>
+                    <div class="preset-buttons">
+                        <button type="button" class="preset-btn" data-w="800" data-h="500">800 × 500</button>
+                        <button type="button" class="preset-btn" data-w="900" data-h="900">900 × 900 (Prácticas TESCI)</button>
+                        <button type="button" class="preset-btn" data-w="1280" data-h="720">1280 × 720 (HD)</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nuevoColor">Color de fondo:</label>
+                    <div class="color-picker-input-group">
+                        <input type="color" id="nuevoColor" value="#ffffff">
+                        <span id="nuevoColorHex">#ffffff (Blanco)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-close="modalNuevo">Cancelar</button>
+                <button type="button" class="btn-primary" id="btnConfirmarNuevo">Crear Lienzo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MODAL GUARDAR COMO (3 FORMATOS DE IMAGEN) -->
+    <div class="modal-overlay" id="modalGuardar">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-floppy-disk"></i> Guardar como...</h3>
+                <button class="close-modal-btn" data-close="modalGuardar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nombreArchivo">Nombre del archivo:</label>
+                    <input type="text" id="nombreArchivo" value="MiDibujo" placeholder="Nombre sin extensión">
+                </div>
+                <div class="form-group">
+                    <label>Selecciona el formato de exportación (3 disponibles):</label>
+                    <div class="format-options">
+                        <label class="format-card selected">
+                            <input type="radio" name="formatoImagen" value="png" checked>
+                            <div class="format-info">
+                                <strong>PNG (.png)</strong>
+                                <span>Máxima calidad y soporte de transparencias</span>
+                            </div>
+                        </label>
+                        <label class="format-card">
+                            <input type="radio" name="formatoImagen" value="jpeg">
+                            <div class="format-info">
+                                <strong>JPEG (.jpg)</strong>
+                                <span>Ideal para fotografías y fondos sólidos</span>
+                            </div>
+                        </label>
+                        <label class="format-card">
+                            <input type="radio" name="formatoImagen" value="webp">
+                            <div class="format-info">
+                                <strong>WEBP (.webp)</strong>
+                                <span>Formato web moderno optimizado</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-close="modalGuardar">Cancelar</button>
+                <button type="button" class="btn-primary" id="btnConfirmarGuardar">Descargar Imagen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MODAL GRAFICAR (PASTEL O BARRAS CON 5 DATOS) -->
+    <div class="modal-overlay" id="modalGraficar">
+        <div class="modal-box modal-large">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-chart-column"></i> Módulo de Graficación (5 Datos)</h3>
+                <button class="close-modal-btn" data-close="modalGraficar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipoGrafica">Tipo de Gráfica:</label>
+                        <select id="tipoGrafica">
+                            <option value="barras">📊 Gráfica de Barras</option>
+                            <option value="pastel">🥧 Gráfica de Pastel (Circular)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tituloGrafica">Título de la gráfica:</label>
+                        <input type="text" id="tituloGrafica" value="Reporte de Datos">
+                    </div>
+                </div>
+
+                <label class="mb-2">Ingresa las 5 etiquetas y sus valores numéricos:</label>
+                <div class="data-table-inputs">
+                    <div class="data-row-input header-row">
+                        <span>#</span>
+                        <span>Etiqueta (Texto)</span>
+                        <span>Valor (Numérico)</span>
+                        <span>Color</span>
+                    </div>
+                    <div class="data-row-input">
+                        <span>1</span>
+                        <input type="text" id="lbl1" value="Dato 1">
+                        <input type="number" id="val1" value="40" min="1">
+                        <input type="color" id="col1" value="#ed1c24">
+                    </div>
+                    <div class="data-row-input">
+                        <span>2</span>
+                        <input type="text" id="lbl2" value="Dato 2">
+                        <input type="number" id="val2" value="25" min="1">
+                        <input type="color" id="col2" value="#00a2e8">
+                    </div>
+                    <div class="data-row-input">
+                        <span>3</span>
+                        <input type="text" id="lbl3" value="Dato 3">
+                        <input type="number" id="val3" value="65" min="1">
+                        <input type="color" id="col3" value="#22b14c">
+                    </div>
+                    <div class="data-row-input">
+                        <span>4</span>
+                        <input type="text" id="lbl4" value="Dato 4">
+                        <input type="number" id="val4" value="30" min="1">
+                        <input type="color" id="col4" value="#ff7f27">
+                    </div>
+                    <div class="data-row-input">
+                        <span>5</span>
+                        <input type="text" id="lbl5" value="Dato 5">
+                        <input type="number" id="val5" value="50" min="1">
+                        <input type="color" id="col5" value="#a349a4">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-close="modalGraficar">Cancelar</button>
+                <button type="button" class="btn-primary" id="btnInsertarGrafica">Insertar en Lienzo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. MODAL ROTAR -->
+    <div class="modal-overlay" id="modalRotar">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-arrows-rotate"></i> Rotar Lienzo / Selección</h3>
+                <button class="close-modal-btn" data-close="modalRotar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Selecciona los grados de rotación a aplicar:</p>
+                <div class="preset-buttons">
+                    <button type="button" class="btn-option" data-angle="90">↻ 90° Horario</button>
+                    <button type="button" class="btn-option" data-angle="180">↻ 180° Media vuelta</button>
+                    <button type="button" class="btn-option" data-angle="270">↺ 270° Antihorario</button>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="anguloManual">O escribe el ángulo exacto (°):</label>
+                    <input type="number" id="anguloManual" value="45" min="-360" max="360">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-close="modalRotar">Cancelar</button>
+                <button type="button" class="btn-primary" id="btnAplicarRotacion">Aplicar Rotación</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. MODAL GIRAR / REDIMENSIONAR (MÁS ANCHO, MÁS ALTO O AMBAS) -->
+    <div class="modal-overlay" id="modalGirar">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Redimensionar / Escalar</h3>
+                <button class="close-modal-btn" data-close="modalGirar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtitle">Ajusta la escala del lienzo o de la selección activa:</p>
+                <div class="form-group">
+                    <label for="escalaOpcion">¿Qué deseas redimensionar?</label>
+                    <select id="escalaOpcion">
+                        <option value="ambas">Ambas dimensiones (Proporcional)</option>
+                        <option value="ancho">Solo Ancho (Hacer más ancho o angosto)</option>
+                        <option value="alto">Solo Alto (Hacer más alto o chato)</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" id="grupoEscalaAncho">
+                        <label for="factorAncho">Factor Ancho (%):</label>
+                        <input type="number" id="factorAncho" value="120" min="10" max="500">
+                    </div>
+                    <div class="form-group" id="grupoEscalaAlto">
+                        <label for="factorAlto">Factor Alto (%):</label>
+                        <input type="number" id="factorAlto" value="120" min="10" max="500">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" data-close="modalGirar">Cancelar</button>
+                <button type="button" class="btn-primary" id="btnAplicarEscala">Aplicar Escala</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>

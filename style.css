@@ -405,6 +405,179 @@ body {
 }
 
 /* ==========================================================================
+   ESTILO APARTADO: GENERADOR DE COLOR PERSONALIZADO (RGB)
+   ========================================================================== */
+.custom-color-box {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.custom-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-box-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.color-preview-mini {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.rgb-slider-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 6px 8px;
+}
+
+.rgb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rgb-tag {
+    font-size: 10px;
+    font-weight: 800;
+    width: 15px;
+    text-align: center;
+    border-radius: 3px;
+    padding: 1px 0;
+    color: #ffffff;
+}
+
+.tag-r { background-color: #ef4444; }
+.tag-g { background-color: #22c55e; }
+.tag-b { background-color: #3b82f6; }
+
+.rgb-item input[type="range"] {
+    flex: 1;
+    height: 4px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.rgb-val {
+    font-size: 11px;
+    font-weight: 600;
+    width: 26px;
+    text-align: right;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.custom-action-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-hex-code {
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 6px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+
+.btn-save-color {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background-color 0.15s ease;
+}
+
+.btn-save-color:hover {
+    background-color: var(--primary-hover);
+}
+
+.slots-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.custom-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+}
+
+.slot-swatch {
+    width: 100%;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px dashed var(--border-color);
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.slot-swatch.empty {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.slot-swatch.empty::after {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.slot-swatch:not(.empty) {
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.slot-swatch:hover {
+    transform: scale(1.08);
+}
+
+.slot-swatch.active {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 1px;
+}
+
+/* ==========================================================================
    3. ÁREA DEL LIENZO (VIEWPORT)
    ========================================================================== */
 .canvas-viewport {
@@ -791,4 +964,179 @@ body {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
+}
+
+/* ==========================================================================
+   MODO OSCURO (DARK THEME)
+   ========================================================================== */
+body.dark-mode {
+    --bg-main: #0b0f19;
+    --bg-panel: #111827;
+    --bg-canvas-area: #030712;
+    --border-color: #374151;
+    --border-hover: #4b5563;
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --primary-color: #3b82f6;
+    --primary-hover: #60a5fa;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .app-header {
+    background-color: var(--bg-panel);
+    border-bottom-color: var(--border-color);
+}
+
+body.dark-mode .toolbar-panel {
+    background-color: var(--bg-panel);
+    border-right-color: var(--border-color);
+}
+
+body.dark-mode .tool-section {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+body.dark-mode .tool-btn {
+    background-color: #111827;
+    border-color: #374151;
+    color: #f3f4f6;
+}
+
+body.dark-mode .tool-btn i {
+    color: #9ca3af;
+}
+
+body.dark-mode .tool-btn:hover:not(:disabled) {
+    background-color: #374151;
+    border-color: var(--border-hover);
+}
+
+body.dark-mode .tool-btn.active {
+    background-color: #1e3a8a;
+    border-color: var(--primary-color);
+    color: #93c5fd;
+}
+
+body.dark-mode .tool-btn.active i {
+    color: #93c5fd;
+}
+
+body.dark-mode .menu-btn {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+body.dark-mode .menu-btn:hover:not(:disabled) {
+    background-color: #374151;
+}
+
+body.dark-mode .menu-btn.primary-btn {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+}
+
+body.dark-mode .menu-btn.primary-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+body.dark-mode .badge {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+body.dark-mode .rgb-slider-list {
+    background-color: #111827;
+    border-color: #374151;
+}
+
+body.dark-mode .custom-hex-code {
+    background-color: #111827;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+body.dark-mode .slot-swatch.empty {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .app-statusbar {
+    background-color: var(--bg-panel);
+    border-top-color: var(--border-color);
+}
+
+body.dark-mode .badge-tag {
+    background-color: #1e3a8a;
+    color: #93c5fd;
+}
+
+body.dark-mode .canvas-viewport {
+    background-color: var(--bg-canvas-area);
+    background-image: 
+        linear-gradient(45deg, #1f2937 25%, transparent 25%), 
+        linear-gradient(-45deg, #1f2937 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #1f2937 75%), 
+        linear-gradient(-45deg, transparent 75%, #1f2937 75%);
+}
+
+body.dark-mode .modal-box {
+    background-color: var(--bg-panel);
+    border-color: var(--border-color);
+    color: #f9fafb;
+}
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+    background-color: #0b0f19;
+    border-color: var(--border-color);
+}
+
+body.dark-mode .modal-header h3 {
+    color: #f9fafb;
+}
+
+body.dark-mode .form-group label {
+    color: #e5e7eb;
+}
+
+body.dark-mode .form-group input[type="text"],
+body.dark-mode .form-group input[type="number"],
+body.dark-mode .form-group select {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+body.dark-mode .preset-btn,
+body.dark-mode .btn-secondary {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+body.dark-mode .preset-btn:hover,
+body.dark-mode .btn-secondary:hover {
+    background-color: #374151;
+}
+
+body.dark-mode .format-card {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+body.dark-mode .format-card:hover {
+    background-color: #374151;
+}
+
+body.dark-mode .format-card.selected {
+    border-color: var(--primary-color);
+    background-color: #1e3a8a;
+}
+
+body.dark-mode .format-info strong {
+    color: #f9fafb;
 }

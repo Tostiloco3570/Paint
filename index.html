@@ -34,6 +34,9 @@
                 <button id="btnGuardarModal" class="menu-btn primary-btn" title="Guardar imagen en 3 formatos">
                     <i class="fa-solid fa-floppy-disk"></i> Guardar como...
                 </button>
+                <button id="btnModoOscuro" class="menu-btn" title="Alternar Modo Oscuro / Claro">
+                    <i class="fa-solid fa-moon" id="iconoModoOscuro"></i> <span id="textoModoOscuro">Oscuro</span>
+                </button>
                 <div class="history-actions">
                     <button id="btnDeshacer" class="menu-btn icon-only" title="Deshacer (Ctrl+Z)" disabled>
                         <i class="fa-solid fa-rotate-left"></i>
@@ -204,6 +207,55 @@
                         <button class="color-swatch" style="background-color: #99d9ea;" data-color="#99d9ea" title="Celeste"></button>
                         <button class="color-swatch" style="background-color: #7092be;" data-color="#7092be" title="Azul grisáceo"></button>
                         <button class="color-swatch" style="background-color: #c8bfe7;" data-color="#c8bfe7" title="Lavanda"></button>
+                    </div>
+
+                    <!-- ESTILO APARTADO: GENERADOR DE COLORES PERSONALIZADOS (SIN ALTERAR PREESTABLECIDOS) -->
+                    <div class="custom-color-box">
+                        <div class="custom-box-header">
+                            <span class="custom-box-title"><i class="fa-solid fa-sliders"></i> Generador RGB</span>
+                            <div class="color-preview-mini" id="previewColorGenerado" style="background-color: #000000;" title="Color personalizado actual"></div>
+                        </div>
+
+                        <!-- Canales R, G y B -->
+                        <div class="rgb-slider-list">
+                            <div class="rgb-item">
+                                <span class="rgb-tag tag-r">R</span>
+                                <input type="range" id="canalR" min="0" max="255" value="0">
+                                <span id="numR" class="rgb-val">0</span>
+                            </div>
+                            <div class="rgb-item">
+                                <span class="rgb-tag tag-g">G</span>
+                                <input type="range" id="canalG" min="0" max="255" value="0">
+                                <span id="numG" class="rgb-val">0</span>
+                            </div>
+                            <div class="rgb-item">
+                                <span class="rgb-tag tag-b">B</span>
+                                <input type="range" id="canalB" min="0" max="255" value="0">
+                                <span id="numB" class="rgb-val">0</span>
+                            </div>
+                        </div>
+
+                        <div class="custom-action-line">
+                            <span class="custom-hex-code" id="codigoHexGenerado">#000000</span>
+                            <button type="button" id="btnGuardarColor" class="btn-save-color" title="Guardar en ranura de mis colores">
+                                <i class="fa-solid fa-plus"></i> Guardar
+                            </button>
+                        </div>
+
+                        <!-- Ranuras para que el usuario guarde sus colores propios -->
+                        <span class="slots-label">Mis Colores Guardados:</span>
+                        <div class="custom-slots-grid" id="ranurasCustom">
+                            <button class="slot-swatch empty" title="Ranura 1 vacía" data-slot="0"></button>
+                            <button class="slot-swatch empty" title="Ranura 2 vacía" data-slot="1"></button>
+                            <button class="slot-swatch empty" title="Ranura 3 vacía" data-slot="2"></button>
+                            <button class="slot-swatch empty" title="Ranura 4 vacía" data-slot="3"></button>
+                            <button class="slot-swatch empty" title="Ranura 5 vacía" data-slot="4"></button>
+                            <button class="slot-swatch empty" title="Ranura 6 vacía" data-slot="5"></button>
+                            <button class="slot-swatch empty" title="Ranura 7 vacía" data-slot="6"></button>
+                            <button class="slot-swatch empty" title="Ranura 8 vacía" data-slot="7"></button>
+                            <button class="slot-swatch empty" title="Ranura 9 vacía" data-slot="8"></button>
+                            <button class="slot-swatch empty" title="Ranura 10 vacía" data-slot="9"></button>
+                        </div>
                     </div>
                 </div>
 

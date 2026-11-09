@@ -221,15 +221,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 6. GESTIÓN DE COLORES (20 COLORES FIJOS) Y GROSOR (PRÁCTICAS 5 Y 6)
+    // 6. GESTIÓN DE COLORES Y GROSOR (PRÁCTICAS 5 Y 6)
     // --------------------------------------------------------------------------
     function cambiarColor(nuevoColor) {
         color = nuevoColor;
         colorActualIndicador.style.backgroundColor = nuevoColor;
         inputColorPersonalizado.value = nuevoColor;
 
+        // Resaltar en la paleta preestablecida sólo si coincide
         document.querySelectorAll('.color-swatch').forEach(sw => {
-            if (sw.dataset.color.toLowerCase() === nuevoColor.toLowerCase()) {
+            if (sw.dataset.color && sw.dataset.color.toLowerCase() === nuevoColor.toLowerCase()) {
                 sw.classList.add('active');
             } else {
                 sw.classList.remove('active');
@@ -237,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Los 20 colores fijos preestablecidos se mantienen intactos
     paletaColores.addEventListener('click', (evento) => {
         let swatch = evento.target.closest('.color-swatch');
         if (swatch) {
@@ -256,6 +258,100 @@ document.addEventListener('DOMContentLoaded', () => {
     checkRellenoFigura.addEventListener('change', (evento) => {
         relleno = evento.target.checked;
     });
+
+    // --------------------------------------------------------------------------
+    // 6.1 ESTILO APARTADO: GENERADOR DE COLOR PERSONALIZADO (RGB)
+    // --------------------------------------------------------------------------
+    const canalR = document.getElementById('canalR');
+    const canalG = document.getElementById('canalG');
+    const canalB = document.getElementById('canalB');
+    const numR = document.getElementById('numR');
+    const numG = document.getElementById('numG');
+    const numB = document.getElementById('numB');
+    const previewColorGenerado = document.getElementById('previewColorGenerado');
+    const codigoHexGenerado = document.getElementById('codigoHexGenerado');
+    const btnGuardarColor = document.getElementById('btnGuardarColor');
+    const ranurasCustom = document.getElementById('ranurasCustom');
+
+    function rgbAHex(r, g, b) {
+        return "#" + [r, g, b].map(x => {
+            const hex = parseInt(x, 10).toString(16);
+            return hex.length === 1 ? "0" + hex : hex;
+        }).join("");
+    }
+
+    function actualizarColorGenerado() {
+        let r = canalR.value;
+        let g = canalG.value;
+        let b = canalB.value;
+
+        numR.innerHTML = r;
+        numG.innerHTML = g;
+        numB.innerHTML = b;
+
+        let hex = rgbAHex(r, g, b);
+        previewColorGenerado.style.backgroundColor = hex;
+        codigoHexGenerado.innerHTML = hex.toUpperCase();
+
+        // Se asigna como color activo de trazo sin modificar los 20 colores fijos
+        cambiarColor(hex);
+    }
+
+    if (canalR && canalG && canalB) {
+        canalR.addEventListener('input', actualizarColorGenerado);
+        canalG.addEventListener('input', actualizarColorGenerado);
+        canalB.addEventListener('input', actualizarColorGenerado);
+    }
+
+    if (btnGuardarColor && ranurasCustom) {
+        btnGuardarColor.addEventListener('click', () => {
+            let hex = codigoHexGenerado.innerHTML;
+            let ranuras = ranurasCustom.querySelectorAll('.slot-swatch');
+            
+            // Buscar la primera ranura vacía o sobreescribir la primera
+            let ranuraDestino = Array.from(ranuras).find(r => r.classList.contains('empty')) || ranuras[0];
+            
+            ranuraDestino.classList.remove('empty');
+            ranuraDestino.style.backgroundColor = hex;
+            ranuraDestino.dataset.color = hex;
+            ranuraDestino.title = 'Color personal: ' + hex;
+
+            // Marcar activa la ranura guardada
+            ranuras.forEach(r => r.classList.remove('active'));
+            ranuraDestino.classList.add('active');
+        });
+
+        // Seleccionar color desde una ranura guardada por el usuario
+        ranurasCustom.addEventListener('click', (evento) => {
+            let slot = evento.target.closest('.slot-swatch');
+            if (slot && !slot.classList.contains('empty') && slot.dataset.color) {
+                ranurasCustom.querySelectorAll('.slot-swatch').forEach(r => r.classList.remove('active'));
+                slot.classList.add('active');
+                cambiarColor(slot.dataset.color);
+            }
+        });
+    }
+
+    // --------------------------------------------------------------------------
+    // 6.2 ALTERNAR MODO OSCURO / MODO CLARO
+    // --------------------------------------------------------------------------
+    const btnModoOscuro = document.getElementById('btnModoOscuro');
+    const iconoModoOscuro = document.getElementById('iconoModoOscuro');
+    const textoModoOscuro = document.getElementById('textoModoOscuro');
+
+    if (btnModoOscuro) {
+        btnModoOscuro.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const esOscuro = document.body.classList.contains('dark-mode');
+            if (esOscuro) {
+                iconoModoOscuro.className = 'fa-solid fa-sun';
+                textoModoOscuro.innerHTML = 'Claro';
+            } else {
+                iconoModoOscuro.className = 'fa-solid fa-moon';
+                textoModoOscuro.innerHTML = 'Oscuro';
+            }
+        });
+    }
 
     // --------------------------------------------------------------------------
     // 7. SELECCIÓN DE HERRAMIENTA ACTIVA (SÓLO BOTONES HABILITADOS)

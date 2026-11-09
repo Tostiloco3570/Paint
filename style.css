@@ -27,10 +27,13 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-body {
+html, body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-width: 100%;
     overflow: hidden;
 }
 
@@ -38,8 +41,10 @@ body {
 .app-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* ==========================================================================
@@ -54,12 +59,30 @@ body {
     align-items: center;
     box-shadow: var(--shadow-sm);
     z-index: 20;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+}
+
+.mobile-toggle-btn {
+    display: none;
+}
+
+.mobile-toolbar-header {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
 }
 
 .brand {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .brand-icon {
@@ -501,6 +524,8 @@ body.dark-mode .custom-slot.empty::after {
 #lienzoPrincipal {
     display: block;
     background-color: #ffffff;
+    touch-action: none;
+    cursor: crosshair;
 }
 
 #lienzoPreview {
@@ -509,6 +534,7 @@ body.dark-mode .custom-slot.empty::after {
     left: 0;
     pointer-events: none; /* Deja pasar eventos al principal o se manejan coordinados */
     z-index: 2;
+    touch-action: none;
 }
 
 /* MARQUEE DE SELECCIÓN */
@@ -597,10 +623,11 @@ body.dark-mode .custom-slot.empty::after {
     background-color: #ffffff;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
-    width: 90%;
+    width: 92%;
     max-width: 460px;
+    max-height: 90vh;
+    overflow-y: auto;
     border: 1px solid var(--border-color);
-    overflow: hidden;
     animation: slideUp 0.2s ease;
 }
 
@@ -1016,4 +1043,129 @@ body.dark-mode .format-card.selected {
 
 body.dark-mode .format-info strong {
     color: #f9fafb;
+}
+
+/* ==========================================================================
+   DISEÑO RESPONSIVO (MÓVILES Y PANTALLAS PEQUEÑAS)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-toggle-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+        background-color: var(--bg-main);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .app-header {
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .brand {
+        gap: 8px;
+    }
+
+    .brand-icon {
+        font-size: 20px;
+    }
+
+    .brand-text h1 {
+        font-size: 15px;
+    }
+
+    .file-menu {
+        gap: 4px;
+    }
+
+    .menu-btn {
+        padding: 6px 9px;
+        font-size: 12px;
+    }
+
+    .btn-text {
+        display: none; /* En teléfonos oculta etiquetas de texto para que nada se corte */
+    }
+
+    .history-actions {
+        margin-left: 4px;
+        padding-left: 4px;
+        gap: 3px;
+    }
+
+    /* EL PANEL DE HERRAMIENTAS SE TRANSFORMA EN DRAWER DESLIZANTE */
+    .toolbar-panel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(300px, 86vw);
+        z-index: 50;
+        transform: translateX(-100%);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: none;
+    }
+
+    .toolbar-panel.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .sidebar-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(15, 23, 42, 0.45);
+        backdrop-filter: blur(2px);
+        z-index: 45;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .mobile-toolbar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .close-panel-btn {
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        line-height: 1;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 0 4px;
+    }
+
+    /* ÁREA DEL LIENZO: ELIMINAR MÁRGENES EXCESIVOS */
+    .canvas-viewport {
+        padding: 10px;
+    }
+
+    /* BARRA DE ESTADO COMPACTA */
+    .app-statusbar {
+        padding: 4px 10px;
+        gap: 10px;
+        font-size: 11px;
+    }
+
+    .status-right {
+        display: none;
+    }
 }

@@ -152,6 +152,98 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
+    // 4.1 SOPORTE TÁCTIL PARA DISPOSITIVOS MÓVILES (TOUCH EVENTS)
+    // --------------------------------------------------------------------------
+    function obtenerCoordenadasTouch(e) {
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0] || e.changedTouches[0];
+        const escalaX = canvas.width / rect.width;
+        const escalaY = canvas.height / rect.height;
+
+        const x = Math.round((touch.clientX - rect.left) * escalaX);
+        const y = Math.round((touch.clientY - rect.top) * escalaY);
+        return { x, y };
+    }
+
+    canvas.addEventListener('touchstart', (evento) => {
+        evento.preventDefault();
+        const { x, y } = obtenerCoordenadasTouch(evento);
+        xInicio = x;
+        yInicio = y;
+        xUltimo = x;
+        yUltimo = y;
+        dibujando = true;
+
+        coordenadas.innerHTML = 'x : ' + x + ' | y : ' + y;
+
+        if (herramienta === 'lapiz') {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = grosor;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (evento) => {
+        evento.preventDefault();
+        const { x, y } = obtenerCoordenadasTouch(evento);
+        coordenadas.innerHTML = 'x : ' + x + ' | y : ' + y;
+
+        if (dibujando) {
+            if (herramienta === 'lapiz') {
+                ctx.beginPath();
+                ctx.moveTo(xUltimo, yUltimo);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = grosor;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+                xUltimo = x;
+                yUltimo = y;
+            } else {
+                previewCtx.clearRect(0, 0, canvasPreview.width, canvasPreview.height);
+                dibujarFigura(previewCtx, herramienta, xInicio, yInicio, x, y);
+            }
+        }
+    }, { passive: false });
+
+    window.addEventListener('touchend', (evento) => {
+        if (!dibujando) return;
+        const { x, y } = obtenerCoordenadasTouch(evento);
+        dibujando = false;
+
+        if (herramienta !== 'lapiz') {
+            previewCtx.clearRect(0, 0, canvasPreview.width, canvasPreview.height);
+            dibujarFigura(ctx, herramienta, xInicio, yInicio, x, y);
+        }
+    });
+
+    // --------------------------------------------------------------------------
+    // 4.2 CONTROL DEL PANEL DE HERRAMIENTAS EN MÓVILES (DRAWER)
+    // --------------------------------------------------------------------------
+    const btnToggleToolbar = document.getElementById('btnToggleToolbar');
+    const btnCloseToolbar = document.getElementById('btnCloseToolbar');
+    const toolbarPanel = document.getElementById('toolbarPanel');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    function abrirToolbarMobile() {
+        if (toolbarPanel) toolbarPanel.classList.add('open');
+        if (sidebarOverlay) sidebarOverlay.classList.add('active');
+    }
+
+    function cerrarToolbarMobile() {
+        if (toolbarPanel) toolbarPanel.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    }
+
+    if (btnToggleToolbar) btnToggleToolbar.addEventListener('click', abrirToolbarMobile);
+    if (btnCloseToolbar) btnCloseToolbar.addEventListener('click', cerrarToolbarMobile);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', cerrarToolbarMobile);
+
+    // --------------------------------------------------------------------------
     // 5. TRAZADO DE LÍNEAS, CURVAS Y FORMAS (PRÁCTICAS 3, 5, 6, 7)
     // --------------------------------------------------------------------------
     function dibujarFigura(contexto, tipo, x0, y0, x1, y1) {
@@ -345,6 +437,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let textoSpan = btn.querySelector('span');
             infoHerramienta.innerHTML = 'Herramienta: ' + (textoSpan ? textoSpan.innerHTML : herramienta);
+
+            // En dispositivos móviles, cerramos el panel automáticamente al seleccionar
+            if (window.innerWidth <= 768) {
+                cerrarToolbarMobile();
+            }
         });
     });
 

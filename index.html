@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Paint Web | Graficación TESCI</title>
     <link rel="stylesheet" href="style.css">
     <!-- Iconos SVG limpios -->
@@ -15,27 +15,30 @@
         <!-- BARRA SUPERIOR (HEADER / MENÚ ARCHIVO) -->
         <header class="app-header">
             <div class="brand">
+                <button id="btnToggleToolbar" class="menu-btn mobile-toggle-btn" title="Mostrar/Ocultar herramientas">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <i class="fa-solid fa-palette brand-icon"></i>
                 <div class="brand-text">
                     <h1>Paint Web</h1>
-                    <span>Graficación • TESCI</span>
+                    <span class="desktop-only">Graficación • TESCI</span>
                 </div>
             </div>
 
             <nav class="file-menu">
                 <button id="btnNuevo" class="menu-btn" title="Crear un nuevo lienzo">
-                    <i class="fa-regular fa-file"></i> Nuevo
+                    <i class="fa-regular fa-file"></i> <span class="btn-text">Nuevo</span>
                 </button>
                 <button id="btnAbrir" class="menu-btn" title="Cargar imagen existente">
-                    <i class="fa-regular fa-folder-open"></i> Abrir
+                    <i class="fa-regular fa-folder-open"></i> <span class="btn-text">Abrir</span>
                 </button>
                 <input type="file" id="inputArchivo" accept="image/png, image/jpeg, image/webp" style="display: none;">
                 
                 <button id="btnGuardarModal" class="menu-btn primary-btn" title="Guardar imagen en 3 formatos">
-                    <i class="fa-solid fa-floppy-disk"></i> Guardar como...
+                    <i class="fa-solid fa-floppy-disk"></i> <span class="btn-text">Guardar</span>
                 </button>
                 <button id="btnModoOscuro" class="menu-btn" title="Alternar Modo Oscuro / Claro">
-                    <i class="fa-solid fa-moon" id="iconoModoOscuro"></i> <span id="textoModoOscuro">Oscuro</span>
+                    <i class="fa-solid fa-moon" id="iconoModoOscuro"></i> <span class="btn-text" id="textoModoOscuro">Oscuro</span>
                 </button>
                 <div class="history-actions">
                     <button id="btnDeshacer" class="menu-btn icon-only" title="Deshacer (Ctrl+Z)" disabled>
@@ -53,9 +56,16 @@
 
         <!-- BARRA DE HERRAMIENTAS Y ESPACIO DE TRABAJO -->
         <div class="main-workspace">
+            <!-- TELÓN DE FONDO PARA MÓVILES CUANDO SE ABRE EL PANEL -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
             <!-- BARRA DE HERRAMIENTAS SUPERIOR/LATERAL (PALETA CLARA) -->
-            <aside class="toolbar-panel">
+            <aside class="toolbar-panel" id="toolbarPanel">
+                <!-- ENCABEZADO EXCLUSIVO PARA MÓVILES -->
+                <div class="mobile-toolbar-header">
+                    <span>Herramientas y Colores</span>
+                    <button type="button" id="btnCloseToolbar" class="close-panel-btn" title="Cerrar panel">&times;</button>
+                </div>
 
                 <!-- GRUPO 1: HERRAMIENTAS BÁSICAS -->
                 <div class="tool-section">

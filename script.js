@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --------------------------------------------------------------------------
-    // 1. OBTENCIÓN DEL CANVAS Y CONTEXTO 2D (PRÁCTICAS 1 A 6)
+    // 1. OBTENCIÓN DEL CANVAS Y CONTEXTO 2D
     // --------------------------------------------------------------------------
     const canvas = document.getElementById('lienzoPrincipal');
     const ctx = canvas.getContext('2d');
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasPreview = document.getElementById('lienzoPreview');
     const previewCtx = canvasPreview.getContext('2d');
 
-    // Elementos informativos en pantalla (Práctica 10 y 11)
+    // Elementos informativos en pantalla
     const coordenadas = document.getElementById('coordenadas');
     const dimensionesLienzo = document.getElementById('dimensionesLienzo');
     const infoHerramienta = document.getElementById('infoHerramienta');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnGuardarModal = document.getElementById('btnGuardarModal');
     const btnLimpiar = document.getElementById('btnLimpiar');
 
-    // Controles de color y grosor (Práctica 5 y 6)
+    // Controles de color y grosor
     const colorActualIndicador = document.getElementById('colorActualIndicador');
     const inputColorPersonalizado = document.getElementById('inputColorPersonalizado');
     const paletaColores = document.getElementById('paletaColores');
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalGuardar = document.getElementById('modalGuardar');
 
     // --------------------------------------------------------------------------
-    // 2. VARIABLES DE ESTADO (COMO EN LAS PRÁCTICAS 10 Y 11)
+    // 2. VARIABLES DE ESTADO
     // --------------------------------------------------------------------------
     let herramienta = 'lapiz';
     let color = '#000000';
@@ -75,19 +75,19 @@ document.addEventListener('DOMContentLoaded', () => {
     configurarLienzo(900, 550, '#ffffff');
 
     // --------------------------------------------------------------------------
-    // 4. CAPTURA DE EVENTOS Y COORDENADAS (PRÁCTICAS 10 Y 11: offsetX y offsetY)
+    // 4. CAPTURA DE EVENTOS Y COORDENADAS
     // --------------------------------------------------------------------------
     canvas.addEventListener('mousemove', (evento) => {
         // En las prácticas 10 y 11 la maestra usó directamente evento.offsetX y offsetY:
         let x = evento.offsetX;
         let y = evento.offsetY;
 
-        // Mostrar coordenadas en tiempo real (Práctica 10 y 11)
+        // Mostrar coordenadas en tiempo real
         coordenadas.innerHTML = 'x : ' + x + ' | y : ' + y;
 
         if (dibujando) {
             if (herramienta === 'lapiz') {
-                // Trazado continuo del lápiz con líneas conectadas (Práctica 3 y 11)
+                // Trazado continuo del lápiz con líneas conectadas
                 ctx.beginPath();
                 ctx.moveTo(xUltimo, yUltimo);
                 ctx.lineTo(x, y);
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sidebarOverlay) sidebarOverlay.addEventListener('click', cerrarToolbarMobile);
 
     // --------------------------------------------------------------------------
-    // 5. TRAZADO DE LÍNEAS, CURVAS Y FORMAS (PRÁCTICAS 3, 5, 6, 7)
+    // 5. TRAZADO DE LÍNEAS, CURVAS Y FORMAS
     // --------------------------------------------------------------------------
     function dibujarFigura(contexto, tipo, x0, y0, x1, y1) {
         contexto.save();
@@ -256,14 +256,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch (tipo) {
             case 'linea':
-                // Línea recta entre 2 puntos (Práctica 3 y 4)
+                // Línea recta entre 2 puntos
                 contexto.moveTo(x0, y0);
                 contexto.lineTo(x1, y1);
                 contexto.stroke();
                 break;
 
             case 'curva':
-                // Línea curva con quadraticCurveTo (Prácticas 5, 6 y 11)
+                // Línea curva con quadraticCurveTo
                 let cpx = (x0 + x1) / 2;
                 let cpy = Math.min(y0, y1) - Math.abs(x1 - x0) / 4;
                 contexto.moveTo(x0, y0);
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
 
             case 'cuadrado':
-                // Rectángulo / Cuadrado (Práctica 6 y 7)
+                // Rectángulo / Cuadrado
                 let ancho = x1 - x0;
                 let alto = y1 - y0;
                 if (relleno) {
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
 
             case 'circulo':
-                // Círculo con arc (Práctica 7)
+                // Círculo con arc
                 let radio = Math.hypot(x1 - x0, y1 - y0) / 2;
                 let centroX = (x0 + x1) / 2;
                 let centroY = (y0 + y1) / 2;
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
 
             case 'triangulo':
-                // Triángulo conectando 3 vértices (Práctica 7 y 8)
+                // Triángulo conectando 3 vértices
                 contexto.moveTo(x0 + (x1 - x0) / 2, y0);
                 contexto.lineTo(x0, y1);
                 contexto.lineTo(x1, y1);
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 6. GESTIÓN DE COLORES Y GROSOR (PRÁCTICAS 5 Y 6)
+    // 6. GESTIÓN DE COLORES Y GROSOR
     // --------------------------------------------------------------------------
     function cambiarColor(nuevoColor) {
         color = nuevoColor;

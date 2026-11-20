@@ -1,12 +1,12 @@
 :root {
-    --bg-main: #f1f5f9;         /* Fondo de la ventana en gris muy suave */
-    --bg-panel: #ffffff;        /* Paneles de herramientas en blanco puro */
+    --bg-main: #f1f5f9;         /* Fondo de la ventana */
+    --bg-panel: #ffffff;        /* Paneles y barras */
     --bg-canvas-area: #e2e8f0;   /* Fondo del área de trabajo */
-    --border-color: #cbd5e1;    /* Bordes sutiles y limpios */
+    --border-color: #cbd5e1;    /* Color de los bordes */
     --border-hover: #94a3b8;
-    --text-primary: #1e293b;    /* Texto oscuro legible */
+    --text-primary: #1e293b;    /* Texto principal */
     --text-secondary: #64748b;  /* Texto secundario */
-    --primary-color: #2563eb;   /* Azul institucional limpio */
+    --primary-color: #2563eb;   /* Azul principal */
     --primary-hover: #1d4ed8;
     --accent-color: #0284c7;
     --danger-color: #ef4444;
@@ -37,7 +37,7 @@ html, body {
     overflow: hidden;
 }
 
-/* CONTENEDOR GENERAL */
+/* Contenedor general */
 .app-container {
     display: flex;
     flex-direction: column;
@@ -47,9 +47,7 @@ html, body {
     overflow: hidden;
 }
 
-/* ==========================================================================
-   1. BARRA SUPERIOR (HEADER)
-   ========================================================================== */
+/* Barra superior */
 .app-header {
     background-color: var(--bg-panel);
     border-bottom: 1px solid var(--border-color);
@@ -160,9 +158,7 @@ html, body {
     border-left: 1px solid var(--border-color);
 }
 
-/* ==========================================================================
-   2. ESPACIO DE TRABAJO PRINCIPAL (TOOLBAR + VIEWPORT)
-   ========================================================================== */
+/* Espacio de trabajo principal */
 .main-workspace {
     flex: 1;
     display: flex;
@@ -170,7 +166,7 @@ html, body {
     position: relative;
 }
 
-/* PANEL LATERAL DE HERRAMIENTAS (CLARO Y MODERNO) */
+/* Panel lateral de herramientas */
 .toolbar-panel {
     width: 290px;
     background-color: var(--bg-panel);
@@ -266,7 +262,7 @@ html, body {
     accent-color: var(--primary-color);
 }
 
-/* BOTÓN DE ACCIÓN DESTACADA (GRAFICACIÓN) */
+/* Botón de graficación */
 .action-card-btn {
     width: 100%;
     background: linear-gradient(135deg, #2563eb, #0284c7);
@@ -310,7 +306,7 @@ html, body {
     opacity: 0.9;
 }
 
-/* SLIDER DE GROSOR */
+/* Selector de grosor */
 .slider-header {
     display: flex;
     justify-content: space-between;
@@ -357,7 +353,7 @@ html, body {
     transition: width 0.1s, height 0.1s;
 }
 
-/* PALETA DE 20 COLORES */
+/* Paleta de colores */
 .colors-header {
     display: flex;
     justify-content: space-between;
@@ -432,9 +428,7 @@ html, body {
     transform: scale(1.1);
 }
 
-/* ==========================================================================
-   FILA DE COLORES PERSONALIZADOS GUARDADOS (ESTILO MS PAINT)
-   ========================================================================== */
+/* Colores personalizados guardados */
 .custom-palette-section {
     margin-top: 10px;
     padding-top: 8px;
@@ -492,13 +486,11 @@ body.dark-mode .custom-slot.empty::after {
     color: #9ca3af;
 }
 
-/* ==========================================================================
-   3. ÁREA DEL LIENZO (VIEWPORT)
-   ========================================================================== */
+/* Área del lienzo */
 .canvas-viewport {
     flex: 1;
     background-color: var(--bg-canvas-area);
-    /* Patrón de cuadrícula tenue estilo diseñador */
+    /* Fondo cuadriculado */
     background-image: 
         linear-gradient(45deg, #cbd5e1 25%, transparent 25%), 
         linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), 
@@ -518,7 +510,7 @@ body.dark-mode .custom-slot.empty::after {
     box-shadow: var(--shadow-lg);
     border-radius: 2px;
     background-color: #ffffff;
-    line-height: 0; /* Elimina espaciado fantasma inline */
+    line-height: 0; /* Evita espacio extra abajo */
 }
 
 #lienzoPrincipal {
@@ -532,12 +524,12 @@ body.dark-mode .custom-slot.empty::after {
     position: absolute;
     top: 0;
     left: 0;
-    pointer-events: none; /* Deja pasar eventos al principal o se manejan coordinados */
+    pointer-events: none; /* No bloquea eventos */
     z-index: 2;
     touch-action: none;
 }
 
-/* MARQUEE DE SELECCIÓN */
+/* Recuadro de selección */
 .selection-marquee {
     position: absolute;
     border: 2px dashed #2563eb;
@@ -558,9 +550,7 @@ body.dark-mode .custom-slot.empty::after {
     font-weight: 600;
 }
 
-/* ==========================================================================
-   4. BARRA DE ESTADO (FOOTER)
-   ========================================================================== */
+/* Barra de estado */
 .app-statusbar {
     background-color: var(--bg-panel);
     border-top: 1px solid var(--border-color);
@@ -597,9 +587,7 @@ body.dark-mode .custom-slot.empty::after {
     border-radius: 4px;
 }
 
-/* ==========================================================================
-   5. MODALES Y VENTANAS EMERGENTES (TEMA CLARO)
-   ========================================================================== */
+/* Modales y ventanas */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -789,7 +777,7 @@ body.dark-mode .custom-slot.empty::after {
     color: var(--text-secondary);
 }
 
-/* TABLA DE ENTRADA PARA GRAFICACIÓN (5 DATOS) */
+/* Tabla para ingresar datos de la gráfica */
 .data-table-inputs {
     display: flex;
     flex-direction: column;
@@ -868,7 +856,7 @@ body.dark-mode .custom-slot.empty::after {
     background-color: var(--primary-hover);
 }
 
-/* ANIMACIONES */
+/* Animaciones de entrada */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -885,9 +873,7 @@ body.dark-mode .custom-slot.empty::after {
     }
 }
 
-/* ==========================================================================
-   MODO OSCURO (DARK THEME)
-   ========================================================================== */
+/* Modo oscuro */
 body.dark-mode {
     --bg-main: #0b0f19;
     --bg-panel: #111827;
@@ -1045,9 +1031,7 @@ body.dark-mode .format-info strong {
     color: #f9fafb;
 }
 
-/* ==========================================================================
-   DISEÑO RESPONSIVO (MÓVILES Y PANTALLAS PEQUEÑAS)
-   ========================================================================== */
+/* Diseño responsivo para celulares y pantallas pequeñas */
 @media (max-width: 768px) {
     .desktop-only {
         display: none !important;
@@ -1093,7 +1077,7 @@ body.dark-mode .format-info strong {
     }
 
     .btn-text {
-        display: none; /* En teléfonos oculta etiquetas de texto para que nada se corte */
+        display: none; /* Oculta texto en botones para ahorrar espacio */
     }
 
     .history-actions {
@@ -1102,7 +1086,7 @@ body.dark-mode .format-info strong {
         gap: 3px;
     }
 
-    /* EL PANEL DE HERRAMIENTAS SE TRANSFORMA EN DRAWER DESLIZANTE */
+    /* Menú lateral desplegable */
     .toolbar-panel {
         position: absolute;
         top: 0;
@@ -1153,12 +1137,12 @@ body.dark-mode .format-info strong {
         padding: 0 4px;
     }
 
-    /* ÁREA DEL LIENZO: ELIMINAR MÁRGENES EXCESIVOS */
+    /* Ajuste de margen en móvil */
     .canvas-viewport {
         padding: 10px;
     }
 
-    /* BARRA DE ESTADO COMPACTA */
+    /* Barra de estado compacta */
     .app-statusbar {
         padding: 4px 10px;
         gap: 10px;

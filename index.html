@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Paint Web | Graficación TESCI</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Iconos SVG limpios -->
+    <!-- Iconos de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- CONTENEDOR PRINCIPAL -->
+    <!-- Contenedor general -->
     <div class="app-container">
 
-        <!-- BARRA SUPERIOR (HEADER / MENÚ ARCHIVO) -->
+        <!-- Barra superior con menú de archivo -->
         <header class="app-header">
             <div class="brand">
                 <button id="btnToggleToolbar" class="menu-btn mobile-toggle-btn" title="Mostrar/Ocultar herramientas">
@@ -34,17 +34,17 @@
                 </button>
                 <input type="file" id="inputArchivo" accept="image/png, image/jpeg, image/webp" style="display: none;">
                 
-                <button id="btnGuardarModal" class="menu-btn primary-btn" title="Guardar imagen en 3 formatos">
+                <button id="btnGuardarModal" class="menu-btn primary-btn" title="Guardar imagen">
                     <i class="fa-solid fa-floppy-disk"></i> <span class="btn-text">Guardar</span>
                 </button>
-                <button id="btnModoOscuro" class="menu-btn" title="Alternar Modo Oscuro / Claro">
+                <button id="btnModoOscuro" class="menu-btn" title="Alternar tema oscuro o claro">
                     <i class="fa-solid fa-moon" id="iconoModoOscuro"></i> <span class="btn-text" id="textoModoOscuro">Oscuro</span>
                 </button>
                 <div class="history-actions">
-                    <button id="btnDeshacer" class="menu-btn icon-only" title="Deshacer (Ctrl+Z)" disabled>
+                    <button id="btnDeshacer" class="menu-btn icon-only" title="Deshacer" disabled>
                         <i class="fa-solid fa-rotate-left"></i>
                     </button>
-                    <button id="btnRehacer" class="menu-btn icon-only" title="Rehacer (Ctrl+Y)" disabled>
+                    <button id="btnRehacer" class="menu-btn icon-only" title="Rehacer" disabled>
                         <i class="fa-solid fa-rotate-right"></i>
                     </button>
                     <button id="btnLimpiar" class="menu-btn icon-only danger-hover" title="Limpiar todo el lienzo">
@@ -54,24 +54,24 @@
             </nav>
         </header>
 
-        <!-- BARRA DE HERRAMIENTAS Y ESPACIO DE TRABAJO -->
+        <!-- Espacio de trabajo -->
         <div class="main-workspace">
-            <!-- TELÓN DE FONDO PARA MÓVILES CUANDO SE ABRE EL PANEL -->
+            <!-- Fondo oscuro para celulares al abrir el menú lateral -->
             <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-            <!-- BARRA DE HERRAMIENTAS SUPERIOR/LATERAL (PALETA CLARA) -->
+            <!-- Panel lateral de herramientas -->
             <aside class="toolbar-panel" id="toolbarPanel">
-                <!-- ENCABEZADO EXCLUSIVO PARA MÓVILES -->
+                <!-- Encabezado para la vista móvil -->
                 <div class="mobile-toolbar-header">
                     <span>Herramientas y Colores</span>
                     <button type="button" id="btnCloseToolbar" class="close-panel-btn" title="Cerrar panel">&times;</button>
                 </div>
 
-                <!-- GRUPO 1: HERRAMIENTAS BÁSICAS -->
+                <!-- Herramientas de dibujo -->
                 <div class="tool-section">
                     <span class="section-title">Herramientas</span>
                     <div class="tool-grid">
-                        <button class="tool-btn active" data-tool="lapiz" title="Lápiz / Pincel libre">
+                        <button class="tool-btn active" data-tool="lapiz" title="Lápiz libre">
                             <i class="fa-solid fa-pencil"></i>
                             <span>Lápiz</span>
                         </button>
@@ -79,38 +79,38 @@
                             <i class="fa-solid fa-eraser"></i>
                             <span>Goma</span>
                         </button>
-                        <button class="tool-btn" data-tool="rellenar" title="Rellenar con color (Bote de pintura)" disabled>
+                        <button class="tool-btn" data-tool="rellenar" title="Rellenar color" disabled>
                             <i class="fa-solid fa-fill-drip"></i>
                             <span>Rellenar</span>
                         </button>
-                        <button class="tool-btn" data-tool="texto" title="Insertar texto en el lienzo" disabled>
+                        <button class="tool-btn" data-tool="texto" title="Texto" disabled>
                             <i class="fa-solid fa-font"></i>
                             <span>Texto</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- GRUPO 2: LÍNEAS Y FIGURAS -->
+                <!-- Líneas y figuras -->
                 <div class="tool-section">
                     <span class="section-title">Líneas y Formas</span>
                     <div class="tool-grid">
-                        <button class="tool-btn" data-tool="linea" title="Línea recta (Práctica 3 y 4)">
+                        <button class="tool-btn" data-tool="linea" title="Línea recta">
                             <i class="fa-solid fa-slash"></i>
                             <span>Línea</span>
                         </button>
-                        <button class="tool-btn" data-tool="curva" title="Línea curva cuadrática (Práctica 5, 6 y 11)">
+                        <button class="tool-btn" data-tool="curva" title="Línea curva">
                             <i class="fa-solid fa-bezier-curve"></i>
                             <span>Curva</span>
                         </button>
-                        <button class="tool-btn" data-tool="cuadrado" title="Cuadrado / Rectángulo (Práctica 7)">
+                        <button class="tool-btn" data-tool="cuadrado" title="Cuadrado / Rectángulo">
                             <i class="fa-regular fa-square"></i>
                             <span>Cuadrado</span>
                         </button>
-                        <button class="tool-btn" data-tool="circulo" title="Círculo / Óvalo (Práctica 7)">
+                        <button class="tool-btn" data-tool="circulo" title="Círculo">
                             <i class="fa-regular fa-circle"></i>
                             <span>Círculo</span>
                         </button>
-                        <button class="tool-btn" data-tool="triangulo" title="Triángulo (Práctica 7 y 8)">
+                        <button class="tool-btn" data-tool="triangulo" title="Triángulo">
                             <i class="fa-solid fa-play fa-rotate-270"></i>
                             <span>Triángulo</span>
                         </button>
@@ -125,11 +125,11 @@
                     </label>
                 </div>
 
-                <!-- GRUPO 3: SELECCIÓN Y TRANSFORMACIONES -->
+                <!-- Selección y edición -->
                 <div class="tool-section">
                     <span class="section-title">Selección y Edición</span>
                     <div class="tool-grid">
-                        <button class="tool-btn" data-tool="seleccionar" id="btnSeleccionar" title="Seleccionar área rectangular" disabled>
+                        <button class="tool-btn" data-tool="seleccionar" id="btnSeleccionar" title="Seleccionar área" disabled>
                             <i class="fa-regular fa-object-ungroup"></i>
                             <span>Seleccionar</span>
                         </button>
@@ -145,21 +145,21 @@
                             <i class="fa-solid fa-crop-simple"></i>
                             <span>Recortar</span>
                         </button>
-                        <button class="tool-btn" id="btnRotarModal" title="Rotar en círculos / grados" disabled>
+                        <button class="tool-btn" id="btnRotarModal" title="Rotar selección o lienzo" disabled>
                             <i class="fa-solid fa-arrows-rotate"></i>
                             <span>Rotar</span>
                         </button>
-                        <button class="tool-btn" id="btnGirarModal" title="Girar y Redimensionar (más ancho, más alto o ambos)" disabled>
+                        <button class="tool-btn" id="btnGirarModal" title="Redimensionar o escalar" disabled>
                             <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                             <span>Girar</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- GRUPO 4: MÓDULO ESPECIAL DE GRAFICACIÓN -->
+                <!-- Módulo de graficación -->
                 <div class="tool-section">
                     <span class="section-title">Graficación de Datos</span>
-                    <button id="btnGraficarModal" class="action-card-btn" title="Crear gráfica de pastel o barras con 5 datos" disabled>
+                    <button id="btnGraficarModal" class="action-card-btn" title="Crear gráfica de pastel o barras" disabled>
                         <i class="fa-solid fa-chart-column"></i>
                         <div>
                             <strong>Graficar (5 datos)</strong>
@@ -168,7 +168,7 @@
                     </button>
                 </div>
 
-                <!-- GRUPO 5: GROSOR DE TRAZO -->
+                <!-- Control de grosor -->
                 <div class="tool-section">
                     <div class="slider-header">
                         <span class="section-title">Grosor de trazo</span>
@@ -180,7 +180,7 @@
                     </div>
                 </div>
 
-                <!-- GRUPO 6: PALETA DE COLORES (20 COLORES FIJOS) -->
+                <!-- Paleta de colores -->
                 <div class="tool-section palette-section">
                     <div class="colors-header">
                         <span class="section-title">Colores</span>
@@ -193,9 +193,8 @@
                         </div>
                     </div>
 
-                    <!-- Cuadrícula con 20 colores preestablecidos fijos -->
+                    <!-- 20 colores preestablecidos -->
                     <div class="color-palette" id="paletaColores">
-                        <!-- Generados estáticamente para carga instantánea -->
                         <button class="color-swatch active" style="background-color: #000000;" data-color="#000000" title="Negro"></button>
                         <button class="color-swatch" style="background-color: #7f7f7f;" data-color="#7f7f7f" title="Gris oscuro"></button>
                         <button class="color-swatch" style="background-color: #880015;" data-color="#880015" title="Marrón rojizo"></button>
@@ -211,7 +210,7 @@
                         <button class="color-swatch" style="background-color: #c3c3c3;" data-color="#c3c3c3" title="Gris claro"></button>
                         <button class="color-swatch" style="background-color: #b97a57;" data-color="#b97a57" title="Café"></button>
                         <button class="color-swatch" style="background-color: #ffaec9;" data-color="#ffaec9" title="Rosa"></button>
-                        <button class="color-swatch" style="background-color: #ffc90e;" data-color="#ffc90e" title="Dorado / Ámbar"></button>
+                        <button class="color-swatch" style="background-color: #ffc90e;" data-color="#ffc90e" title="Dorado"></button>
                         <button class="color-swatch" style="background-color: #efe4b0;" data-color="#efe4b0" title="Beige"></button>
                         <button class="color-swatch" style="background-color: #b5e61d;" data-color="#b5e61d" title="Verde lima"></button>
                         <button class="color-swatch" style="background-color: #99d9ea;" data-color="#99d9ea" title="Celeste"></button>
@@ -219,37 +218,37 @@
                         <button class="color-swatch" style="background-color: #c8bfe7;" data-color="#c8bfe7" title="Lavanda"></button>
                     </div>
 
-                    <!-- FILA COMPACTA DE COLORES PERSONALIZADOS GUARDADOS (ESTILO MS PAINT) -->
+                    <!-- Ranuras para guardar colores personalizados -->
                     <div class="custom-palette-section">
                         <div class="custom-palette-header">
                             <span class="custom-slots-title">Colores guardados</span>
                             <small class="custom-slots-hint">Clic en '+' para guardar</small>
                         </div>
                         <div class="color-palette custom-slots-row" id="ranurasCustom">
-                            <button class="color-swatch custom-slot empty" data-slot="0" title="Ranura 1 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="1" title="Ranura 2 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="2" title="Ranura 3 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="3" title="Ranura 4 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="4" title="Ranura 5 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="5" title="Ranura 6 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="6" title="Ranura 7 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="7" title="Ranura 8 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="8" title="Ranura 9 (Clic para elegir color)"></button>
-                            <button class="color-swatch custom-slot empty" data-slot="9" title="Ranura 10 (Clic para elegir color)"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="0" title="Ranura 1"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="1" title="Ranura 2"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="2" title="Ranura 3"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="3" title="Ranura 4"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="4" title="Ranura 5"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="5" title="Ranura 6"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="6" title="Ranura 7"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="7" title="Ranura 8"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="8" title="Ranura 9"></button>
+                            <button class="color-swatch custom-slot empty" data-slot="9" title="Ranura 10"></button>
                         </div>
                     </div>
                 </div>
 
             </aside>
 
-            <!-- ÁREA DE DIBUJO CON SCROLL Y ZOOM -->
+            <!-- Área del lienzo -->
             <main class="canvas-viewport" id="canvasViewport">
                 <div class="canvas-wrapper" id="canvasWrapper">
-                    <!-- Canvas principal sobre el que se guarda el dibujo final -->
+                    <!-- Lienzo principal -->
                     <canvas id="lienzoPrincipal" width="800" height="500"></canvas>
-                    <!-- Canvas transparente superpuesto para vistas previas de líneas, figuras y selección -->
+                    <!-- Lienzo para vista previa -->
                     <canvas id="lienzoPreview" width="800" height="500"></canvas>
-                    <!-- Marco visual de selección activa (Marquee) -->
+                    <!-- Recuadro para selección -->
                     <div id="selectionMarquee" class="selection-marquee" style="display: none;">
                         <div class="marquee-tag">Selección</div>
                     </div>
@@ -258,7 +257,7 @@
 
         </div>
 
-        <!-- BARRA DE ESTADO INFERIOR (ESTILO PRÁCTICAS 10 Y 11) -->
+        <!-- Barra de estado inferior -->
         <footer class="app-statusbar">
             <div class="status-item">
                 <i class="fa-solid fa-crosshairs"></i>
@@ -279,11 +278,9 @@
 
     </div>
 
-    <!-- ======================================================== -->
-    <!-- MODALES / VENTANAS EMERGENTES                            -->
-    <!-- ======================================================== -->
+    <!-- Ventanas modales -->
 
-    <!-- 1. MODAL NUEVO LIENZO -->
+    <!-- Modal para nuevo lienzo -->
     <div class="modal-overlay" id="modalNuevo">
         <div class="modal-box">
             <div class="modal-header">
@@ -306,7 +303,7 @@
                     <label>Tamaños rápidos recomendados:</label>
                     <div class="preset-buttons">
                         <button type="button" class="preset-btn" data-w="800" data-h="500">800 × 500</button>
-                        <button type="button" class="preset-btn" data-w="900" data-h="900">900 × 900 (Prácticas TESCI)</button>
+                        <button type="button" class="preset-btn" data-w="900" data-h="900">900 × 900 (Cuadrado)</button>
                         <button type="button" class="preset-btn" data-w="1280" data-h="720">1280 × 720 (HD)</button>
                     </div>
                 </div>
@@ -325,7 +322,7 @@
         </div>
     </div>
 
-    <!-- 2. MODAL GUARDAR COMO (3 FORMATOS DE IMAGEN) -->
+    <!-- Modal para guardar archivo -->
     <div class="modal-overlay" id="modalGuardar">
         <div class="modal-box">
             <div class="modal-header">
@@ -338,7 +335,7 @@
                     <input type="text" id="nombreArchivo" value="MiDibujo" placeholder="Nombre sin extensión">
                 </div>
                 <div class="form-group">
-                    <label>Selecciona el formato de exportación (3 disponibles):</label>
+                    <label>Selecciona el formato de exportación:</label>
                     <div class="format-options">
                         <label class="format-card selected">
                             <input type="radio" name="formatoImagen" value="png" checked>
@@ -351,14 +348,14 @@
                             <input type="radio" name="formatoImagen" value="jpeg">
                             <div class="format-info">
                                 <strong>JPEG (.jpg)</strong>
-                                <span>Ideal para fotografías y fondos sólidos</span>
+                                <span>Ideal para fotos y fondos sólidos</span>
                             </div>
                         </label>
                         <label class="format-card">
                             <input type="radio" name="formatoImagen" value="webp">
                             <div class="format-info">
                                 <strong>WEBP (.webp)</strong>
-                                <span>Formato web moderno optimizado</span>
+                                <span>Formato ligero para web</span>
                             </div>
                         </label>
                     </div>
@@ -371,7 +368,7 @@
         </div>
     </div>
 
-    <!-- 3. MODAL GRAFICAR (PASTEL O BARRAS CON 5 DATOS) -->
+    <!-- Modal para graficar datos -->
     <div class="modal-overlay" id="modalGraficar">
         <div class="modal-box modal-large">
             <div class="modal-header">
@@ -440,7 +437,7 @@
         </div>
     </div>
 
-    <!-- 4. MODAL ROTAR -->
+    <!-- Modal para rotar -->
     <div class="modal-overlay" id="modalRotar">
         <div class="modal-box">
             <div class="modal-header">
@@ -466,7 +463,7 @@
         </div>
     </div>
 
-    <!-- 5. MODAL GIRAR / REDIMENSIONAR (MÁS ANCHO, MÁS ALTO O AMBAS) -->
+    <!-- Modal para redimensionar -->
     <div class="modal-overlay" id="modalGirar">
         <div class="modal-box">
             <div class="modal-header">
